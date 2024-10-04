@@ -24,8 +24,8 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('admin'),
         ]);
 
-        Project::factory(10)->create();
-        TechStack::factory(10)->create();
-        ProjectImage::factory(10)->create();
+        // Project::factory(10)->create();
+        // TechStack::factory(10)->create();
+        // ProjectImage::factory(10)->create();
     }
 }

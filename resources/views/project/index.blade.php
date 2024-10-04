@@ -51,7 +51,7 @@
                   <td>{{ $item->repository_link }}</td>
                   <td><img src="{{ asset('images') }}/{{ $item->thumbnail }}" alt="" width="100px" height="100px"></td>
                 <td>
-                    <a  href="{{ route('projects.edit', $item->id) }}" class="btn btn-warning btn-sm d-inline-block mr-2 ">Edit</a>
+                    <a  href="/projects/{{ $item->id }}" class="btn btn-warning btn-sm d-inline-block mr-2 ">Edit</a>
                      <form action="{{ route('projects.destroy', $item->id) }}" method="post">
                     @csrf
                     @method('DELETE')

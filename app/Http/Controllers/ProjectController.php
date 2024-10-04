@@ -51,7 +51,7 @@ class ProjectController extends Controller
             'repository_link' => $request->repository_link,
             'thumbnail' => $photo,
         ]);
-        return redirect()->route('project.index')->with('create', 'Proyek berhasil ditambahkan');
+        return redirect()->route('projects.index')->with('create', 'Proyek berhasil ditambahkan');
     }
 
     /**
@@ -59,7 +59,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+        return view('project.edit', compact('project'));
     }
 
     /**
@@ -75,7 +75,30 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        // dd($request->all());
+           $field = [
+            'name' => $request->name,
+            'description' => $request->description,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'url' => $request->url,
+            'repository_link' => $request->repository_link,
+            'thumbnail' => $request->thumbnail,
+        ];
+      $photo = null;
+
+      if($request->thumbnail){
+        // validate
+          $request->validate([
+                'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+            $photo = time().'-'.$request->thumbnail->getClientOriginalName();
+            $request->thumbnail->move(public_path('images'), $photo);
+            $field['thumbnail'] = $photo;
+        }
+    
+        $project->update($field);
+        return redirect()->route('projects.index')->with('update', 'Proyek berhasil diubah');
     }
 
     /**
@@ -83,6 +106,7 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        $project->delete();
+        return redirect()->route('projects.index')->with('delete', 'Proyek berhasil dihapus');
     }
 }

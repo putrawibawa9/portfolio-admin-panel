@@ -3,11 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\ProjectImageController;
 use App\Http\Controllers\TechStackController;
+use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\ProjectImageController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/dashboard', function () {
@@ -19,6 +20,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/anotherProjects/show/{id}', [LandingPageController::class, 'show'])->name('landingPage.show');
+
+Route::get('/anotherProjects', [LandingPageController::class, 'index'])->name('landingPage.index');
 
 Route::resource('projects', ProjectController::class)->middleware('auth');
 Route::resource('techStacks', TechStackController::class)->middleware('auth');
